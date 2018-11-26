@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject bomb;
     public GameObject bombPrefab;
     private float bombForce = 5000.0f;
+    private Vector3 moveDirection;
     // Use this for initialization
     void Start () {
         player = GetComponent<Rigidbody>();
@@ -43,8 +44,9 @@ public class PlayerController : MonoBehaviour {
             bomb.GetComponent<Rigidbody>().useGravity = true;
             bomb.GetComponent<Rigidbody>().AddForce(Vector3.forward * bombForce);
             Debug.Log(bomb.GetComponent<Rigidbody>().velocity);
+            speechBubble = true;
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && speechBubble == true)
         {
             temp = Instantiate(speechPrefab, speechBubbleSpawn.position, speechBubbleSpawn.rotation);
             temp.transform.parent = transform;
@@ -90,16 +92,31 @@ public class PlayerController : MonoBehaviour {
         direction.z = 0.0f;
         direction = Camera.main.ScreenToWorldPoint(direction);
         direction = direction - transform.position;*/
-        //transform.rotation = Quaternion.Euler(0, cam.GetComponent<CamMouseLook>().currentYRotation, 0);
+        //transform.rotation = Quaternion.Euler(transform.rotation.x, cam.GetComponent<CamMouseLook>().currentYRotation, transform.rotation.z);
         //Debug.Log(cam.GetComponent<CamMouseLook>().currentYRotation + "    " + speechBubbleSpawn.rotation);
         //speechBubbleSpawn.rotation = Quaternion.Euler(0, cam.GetComponent<CamMouseLook>().currentYRotation, 0);
         //bombSpawn.rotation = Quaternion.Euler(cam.GetComponent<CamMouseLook>().currentXRotation, cam.GetComponent<CamMouseLook>().currentYRotation, 0);
+        /*
         float translation = -Input.GetAxis("Vertical") * movementSpeed;
         float straffe = -Input.GetAxis("Horizontal") * movementSpeed;
         translation *= Time.deltaTime;
         straffe *= Time.deltaTime;
 
         transform.Translate(straffe, 0, translation);
+        */
+        float horizontalMovement = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
+        float verticalMovement = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
+        transform.Translate(horizontalMovement, 0, verticalMovement);
+
+    }
+    void fixedUpdate()
+    {
+        Move();
+    }
+    void Move()
+    {
+        Vector3 yVelFix = new Vector3(0, player.velocity.y, 0);
+        player.velocity += yVelFix;
     }
     IEnumerator StartTalking(GameObject temp)
     {
@@ -117,14 +134,19 @@ public class PlayerController : MonoBehaviour {
     }
     void OnTriggerStay(Collider collider)
     {
-
         if (collider.gameObject.tag == "platform")
         {
             transform.parent = collider.transform;
+        }
+    }
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.tag == "SpeechBubble")
+        {
+            speechBubble = false;
 
         }
     }
-
     void OnTriggerExit(Collider collider)
     {
         if (collider.gameObject.tag == "platform")

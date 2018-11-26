@@ -73,8 +73,8 @@ public class Turret : MonoBehaviour
         while (true)
         {
             Instantiate(bullet, gunEnd.position, gunEnd.rotation);
-            
-            yield return new WaitForSeconds(10);
+            bullet.transform.parent = transform;
+            yield return new WaitForSeconds(15);
         }
     }
 }

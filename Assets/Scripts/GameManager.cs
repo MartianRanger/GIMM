@@ -30,30 +30,29 @@ public class GameManager : MonoBehaviour
     {
         if (player == null)
         {
-            return;
+            playerLose();
         }
 
-        if (player.GetComponent<Health>().currentHealth <= 0)
+        if (enemy == null)
         {
-            Invoke("playerLose", 2.0f);
-        }
-        else if (enemy.GetComponent<Health>().currentHealth <= 0)
-        {
-            Invoke("playerWin", 2.0f);
+            playerWin();
         }
     }
     private void playerWin()
     {
-        gameOverText.text = "YOU WIN!";
+        Debug.Log("YOU WON!");
+        //gameOverText.text = "YOU WIN!";
         //SceneManager.LoadScene("Main");
 
-        StartCoroutine("waitAndLoad", 5.0f);
+        StartCoroutine("waitAndLoad", 2.0f);
     }
     private void playerLose()
     {
-        gameOverText.text = "YOU LOSE!";
-	 failCam.enabled = true;
-        StartCoroutine("waitAndLoad", 5.0f);
+        Debug.Log("SHIOW");
+        //gameOverText.text = "YOU LOSE!";
+        GameObject.Destroy(player);
+	    failCam.enabled = true;
+        StartCoroutine("waitAndLoad", 2.0f);
     }
 
     IEnumerator waitAndLoad()

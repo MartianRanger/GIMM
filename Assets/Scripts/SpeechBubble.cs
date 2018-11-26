@@ -98,6 +98,10 @@ public class SpeechBubble : MonoBehaviour {
                 Destroy(gameObject);
             }
         }
+        if (other.gameObject.tag == "SpeechBubble")
+        {
+            Destroy(gameObject);
+        }
     }
     void OnTriggerExit (Collider other)
     {
