@@ -18,9 +18,10 @@ public class PowerUp : MonoBehaviour {
 
     void OnTriggerEnter (Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") || other.CompareTag("Enemy"))
         {
             Pickup(other);
+            other.GetComponent<Health>().currentHealth += 25;
         }
     }
     void Pickup(Collider player)

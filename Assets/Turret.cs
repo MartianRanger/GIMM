@@ -25,7 +25,7 @@ public class Turret : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.position);
         if (player != null)
         {
-            if (distance <= 110)
+            if (distance <= 110 && distance >= 15)
             {
                 /*
                 navigationTime += Time.deltaTime;
