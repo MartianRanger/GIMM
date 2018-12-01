@@ -19,7 +19,7 @@ public class CustomVRControls : MonoBehaviour {
     public Slider audioSlider;
     // Use this for initialization
     void Start () {
-        player = GetComponent<Rigidbody>();
+        //player = GetComponent<Rigidbody>();
     }
 	public void Fire(float launchForce, float fireRate)
     {
@@ -39,8 +39,6 @@ public class CustomVRControls : MonoBehaviour {
             temp.transform.parent = transform;
             audioSlider.direction = Slider.Direction.LeftToRight;
             audioSlider.minValue = 0;
-            audioSlider.maxValue = temp.GetComponent<AudioSource>().clip.length;
-            audioSlider.value = temp.GetComponent<AudioSource>().time;
             Debug.Log("Why");
         }
         if (OVRInput.GetUp(OVRInput.Button.One) && temp.GetComponent<AudioSource>().isPlaying)
@@ -59,7 +57,7 @@ public class CustomVRControls : MonoBehaviour {
 
             temp.GetComponent<AudioSource>().Stop();
             temp.transform.parent = null;
-
+            Debug.Log("DESTROYED GOOD SIR!~");
         }
         if (OVRInput.Get(OVRInput.Button.Two))
         {
@@ -67,16 +65,20 @@ public class CustomVRControls : MonoBehaviour {
         }
         if (OVRInput.GetDown(OVRInput.Button.Three))
         {
-            bomb = Instantiate(bombPrefab, bombSpawn.position, player.rotation);
+            bomb = Instantiate(bombPrefab, bombSpawn.position, transform.rotation);
             bomb.GetComponent<Rigidbody>().useGravity = true;
             bomb.GetComponent<Rigidbody>().AddForce(Vector3.forward * bombForce);
             Debug.Log(bomb.GetComponent<Rigidbody>().velocity);
             speechBubble = true;
+            Debug.Log("BOMB!");
         }
         if (OVRInput.Get(OVRInput.Button.Four))
         {
             Fire(launchForce, 1);
         }
+        audioSlider.maxValue = temp.GetComponent<AudioSource>().clip.length;
+        audioSlider.value = temp.GetComponent<AudioSource>().time;
+
         // returns true if the primary button (typically “A”) was pressed this frame.
         OVRInput.GetDown(OVRInput.Button.One);
 

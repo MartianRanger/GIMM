@@ -183,7 +183,7 @@ public class OVRPlayerController : MonoBehaviour
 
 	void OnEnable()
 	{
-		OVRManager.display.RecenteredPose += ResetOrientation;
+		//OVRManager.display.RecenteredPose += ResetOrientation;
 
 		if (CameraRig != null)
 		{
@@ -334,8 +334,8 @@ public class OVRPlayerController : MonoBehaviour
 				MoveScale = 0.70710678f;
 
 			// No positional movement if we are in the air
-			if (!Controller.isGrounded)
-				MoveScale = 0.0f;
+			//if (!Controller.isGrounded)
+			//	MoveScale = 0.0f;
 
 			MoveScale *= SimulationRate * Time.deltaTime;
 

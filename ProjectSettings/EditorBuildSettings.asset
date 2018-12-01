@@ -8,7 +8,13 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Please.unity
     guid: c6562497d67e2314bb8c89a0899a677a
+  - enabled: 1
+    path: Assets/VRMain.unity
+    guid: 788d28b53bb6962488ca84044e00b6cb
+  - enabled: 1
+    path: Assets/VREndScreen.unity
+    guid: d68b5176fbbf8b142a148765b18a4321
   m_configObjects: {}

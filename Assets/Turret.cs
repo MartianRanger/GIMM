@@ -12,6 +12,7 @@ public class Turret : MonoBehaviour
     private float navigationTime = 0;
     private float rotationSpeed = 3.0f;
     private float moveSpeed = 3.0f;
+    public Transform speechBubbleSpawn;
     // Use this for initialization
     void Awake()
     {
@@ -50,7 +51,8 @@ public class Turret : MonoBehaviour
     void UpdateTarget()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        transform.LookAt(player.transform.position);
+        //transform.LookAt(player.transform.position);
+        gunEnd.LookAt(player.transform.position);
     }
     void OnTriggerEnter(Collider other)
     {
@@ -72,8 +74,10 @@ public class Turret : MonoBehaviour
     {
         while (true)
         {
-            Instantiate(bullet, gunEnd.position, gunEnd.rotation);
-            bullet.transform.parent = transform;
+            GameObject temp = new GameObject();
+            //Destroy(temp, 2f);
+            temp = Instantiate(bullet, gunEnd.position, gunEnd.rotation);
+            temp.transform.parent = transform;
             yield return new WaitForSeconds(15);
         }
     }

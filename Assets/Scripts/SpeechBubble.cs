@@ -45,11 +45,11 @@ public class SpeechBubble : MonoBehaviour {
         }
         if (!thisSound.isPlaying)
         {
-            GetComponent<Rigidbody>().velocity = transform.forward * 100;
+            GetComponent<Rigidbody>().velocity = transform.forward * 250;
             isPlaying = false;
             speechBubble.isKinematic = false;
-
-            thisSound.Stop();
+            transform.parent = null;
+            //thisSound.Stop();
         }
     }
     void DestroySound()
@@ -89,7 +89,7 @@ public class SpeechBubble : MonoBehaviour {
             {
                 var hit = other.gameObject;
                 var health = hit.GetComponent<Health>();
-                int damage = Mathf.RoundToInt(2 * thisSound.clip.length);
+                int damage = Mathf.RoundToInt(10 * thisSound.clip.length);
                 if (health != null)
                 {
                     health.TakeDamage(damage);

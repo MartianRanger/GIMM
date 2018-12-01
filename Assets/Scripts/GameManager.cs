@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
     public GameObject player;
-    public GUIText gameOverText;
+    public Text gameOverText;
+    public Text failText;
     public GameObject enemy;
-
+    public GameObject token;
+    public Transform tokenSpawn;
     public Camera failCam;
+    public Camera winCam;
+    public Canvas failCanvas;
+    private bool gameOver;
     public static GameManager instance = null;
     // Use this for initialization
     void Start()
@@ -19,11 +25,15 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
+        //gameOverText.text = "Game Started";
 
         player = GameObject.FindGameObjectWithTag("Player");
         enemy = GameObject.FindGameObjectWithTag("Enemy");
-        gameOverText.text = " ";
+        //gameOverText.text = " ";
         failCam.enabled = false;
+        token = Instantiate(token, tokenSpawn.position, tokenSpawn.rotation);
+        gameOver = false;
+        //failCanvas.gameObject.SetActive(false);
     }
     // Update is called once per frame
     void Update()
@@ -37,34 +47,49 @@ public class GameManager : MonoBehaviour
         {
             playerWin();
         }
+        Debug.Log(gameOver);
     }
     private void playerWin()
     {
         Debug.Log("YOU WON!");
-        //gameOverText.text = "YOU WIN!";
+        gameOverText.text = "YOU WIN!";
         //SceneManager.LoadScene("Main");
-
-        StartCoroutine("waitAndLoad", 2.0f);
+        //failCanvas.gameObject.SetActive(true);
+        gameOver = true;
+        Invoke("waitAndLoad", 1);
+        //Invoke("waitAndLoad", 1);
     }
     private void playerLose()
     {
-        Debug.Log("SHIOW");
-        //gameOverText.text = "YOU LOSE!";
-        GameObject.Destroy(player);
+        //failCanvas.gameObject.SetActive(true);
+
+        Debug.Log("YOU LOSET!");
+        failText.text = "YOU LOSE!";
+        //GameObject.Destroy(player);
+        GameObject.Destroy(enemy);
 	    failCam.enabled = true;
-        StartCoroutine("waitAndLoad", 2.0f);
+        //winCam.enabled = false;
+        gameOver = true;
+        SceneManager.LoadScene("VREndScreen"); //load scene
+        Debug.Log(gameOver + "SDF");
+        Invoke("waitAndLoad", 1);
+        //Invoke("waitAndLoad", 1);
+
     }
 
-    IEnumerator waitAndLoad()
+    private void waitAndLoad()
     {
-        SceneManager.LoadScene("Main"); //load scene
-
-        yield return new WaitForSeconds(.02f); //wait for load to happen
+        SceneManager.LoadScene("VRMain");
+        Debug.Log("WAIT AND LOAD!");
+        //yield return new WaitForSeconds(.02f); //wait for load to happen
 
         //Get references
-        player = GameObject.FindGameObjectWithTag("Player");
-        enemy = GameObject.FindGameObjectWithTag("Enemy");
-        gameOverText.text = " ";
+        //player = GameObject.FindGameObjectWithTag("Player");
+        //enemy = GameObject.FindGameObjectWithTag("Enemy");
+        //gameOverText.text = " ";
+        //gameOver = false;
+        //failCam.enabled = false;
+        //token = Instantiate(token, tokenSpawn.position, tokenSpawn.rotation);
 
     }
 }
