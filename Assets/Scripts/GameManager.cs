@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
         //SceneManager.LoadScene("Main");
         //failCanvas.gameObject.SetActive(true);
         gameOver = true;
-        Invoke("waitAndLoad", 1);
+        StartCoroutine("waitAndLoad", 2.0f);
         //Invoke("waitAndLoad", 1);
     }
     private void playerLose()
@@ -72,24 +72,26 @@ public class GameManager : MonoBehaviour
         gameOver = true;
         SceneManager.LoadScene("VREndScreen"); //load scene
         Debug.Log(gameOver + "SDF");
-        Invoke("waitAndLoad", 1);
+        StartCoroutine("waitAndLoad", 2.0f);
         //Invoke("waitAndLoad", 1);
 
     }
 
-    private void waitAndLoad()
+    IEnumerator waitAndLoad()
     {
-        SceneManager.LoadScene("VRMain");
-        Debug.Log("WAIT AND LOAD!");
+        SceneManager.LoadScene("VRMain"); //load scene
+
+        yield return new WaitForSeconds(.02f); //wait for load to happen
+
         //yield return new WaitForSeconds(.02f); //wait for load to happen
 
         //Get references
-        //player = GameObject.FindGameObjectWithTag("Player");
-        //enemy = GameObject.FindGameObjectWithTag("Enemy");
-        //gameOverText.text = " ";
-        //gameOver = false;
-        //failCam.enabled = false;
-        //token = Instantiate(token, tokenSpawn.position, tokenSpawn.rotation);
+        player = GameObject.FindGameObjectWithTag("Player");
+        enemy = GameObject.FindGameObjectWithTag("Enemy");
+        gameOverText.text = " ";
+        gameOver = false;
+        failCam.enabled = false;
+        token = Instantiate(token, tokenSpawn.position, tokenSpawn.rotation);
 
     }
 }
