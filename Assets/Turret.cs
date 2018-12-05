@@ -51,7 +51,7 @@ public class Turret : MonoBehaviour
     void UpdateTarget()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        //transform.LookAt(player.transform.position);
+        transform.LookAt(player.transform.position);
         gunEnd.LookAt(player.transform.position);
     }
     void OnTriggerEnter(Collider other)
@@ -78,7 +78,9 @@ public class Turret : MonoBehaviour
             //Destroy(temp, 2f);
             temp = Instantiate(bullet, gunEnd.position, gunEnd.rotation);
             temp.transform.parent = transform;
-            yield return new WaitForSeconds(15);
+            float length = temp.GetComponent<AudioSource>().clip.length + 5;
+
+            yield return new WaitForSeconds(length);
         }
     }
 }

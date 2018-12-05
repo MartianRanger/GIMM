@@ -10,6 +10,9 @@ public class SpeechBubble : MonoBehaviour {
     private AudioClip sound;
     private Rigidbody speechBubble;
     public AudioClip[] myClips;
+    private float speed;
+    private float damage;
+
     void Awake()
     {
         myClips = Resources.LoadAll<AudioClip>("Audio");
@@ -21,6 +24,7 @@ public class SpeechBubble : MonoBehaviour {
 
             RandomizeSfx(myClips);
         }
+        speed = 200 / thisSound.clip.length;
 
     }
     // Use this for initialization
@@ -45,7 +49,7 @@ public class SpeechBubble : MonoBehaviour {
         }
         if (!thisSound.isPlaying)
         {
-            GetComponent<Rigidbody>().velocity = transform.forward * 250;
+            GetComponent<Rigidbody>().velocity = transform.forward * speed;
             isPlaying = false;
             speechBubble.isKinematic = false;
             transform.parent = null;
@@ -71,16 +75,10 @@ public class SpeechBubble : MonoBehaviour {
         //Play the clip.
         thisSound.Play();
     }
-    void OnTriggerEnter()
-    {
-        Debug.Log("RUNS");
-    }
     void OnCollisionEnter(Collision other)
     {
-        Debug.Log("hisd");
         if (other.gameObject.tag == "wall")
         {
-            Debug.Log("Minecraft");
             Destroy(gameObject);
         }
         if(other.gameObject.tag == "Player" || other.gameObject.tag == "Enemy")
@@ -89,7 +87,7 @@ public class SpeechBubble : MonoBehaviour {
             {
                 var hit = other.gameObject;
                 var health = hit.GetComponent<Health>();
-                int damage = Mathf.RoundToInt(10 * thisSound.clip.length);
+                int damage = Mathf.RoundToInt(5 * thisSound.clip.length);
                 if (health != null)
                 {
                     health.TakeDamage(damage);
@@ -107,7 +105,6 @@ public class SpeechBubble : MonoBehaviour {
     {
         if (other.gameObject.tag == "wall")
         {
-            Debug.Log("hi");
             Destroy(gameObject);
         }
     }

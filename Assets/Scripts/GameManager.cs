@@ -63,15 +63,13 @@ public class GameManager : MonoBehaviour
     {
         //failCanvas.gameObject.SetActive(true);
 
-        Debug.Log("YOU LOSET!");
+        Debug.Log("YOU LOSE!");
         failText.text = "YOU LOSE!";
         //GameObject.Destroy(player);
         GameObject.Destroy(enemy);
 	    failCam.enabled = true;
         //winCam.enabled = false;
         gameOver = true;
-        SceneManager.LoadScene("VREndScreen"); //load scene
-        Debug.Log(gameOver + "SDF");
         StartCoroutine("waitAndLoad", 2.0f);
         //Invoke("waitAndLoad", 1);
 

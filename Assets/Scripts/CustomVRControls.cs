@@ -39,7 +39,6 @@ public class CustomVRControls : MonoBehaviour {
             temp.transform.parent = transform;
             audioSlider.direction = Slider.Direction.LeftToRight;
             audioSlider.minValue = 0;
-            Debug.Log("Why");
         }
         if (OVRInput.GetUp(OVRInput.Button.One) && temp.GetComponent<AudioSource>().isPlaying)
         {
@@ -53,11 +52,9 @@ public class CustomVRControls : MonoBehaviour {
         {
             temp.transform.parent = null;
             audioSlider.value = temp.GetComponent<AudioSource>().time;
-            Debug.Log("DIDI" + " " + temp.GetComponent<Rigidbody>().velocity);
 
             temp.GetComponent<AudioSource>().Stop();
             temp.transform.parent = null;
-            Debug.Log("DESTROYED GOOD SIR!~");
         }
         if (OVRInput.Get(OVRInput.Button.Two))
         {
