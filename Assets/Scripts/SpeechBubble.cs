@@ -10,13 +10,17 @@ public class SpeechBubble : MonoBehaviour {
     private AudioClip sound;
     private Rigidbody speechBubble;
     public AudioClip[] myClips;
+    public float damageFactor;
     private float speed;
     private float damage;
+    private Vector3 destinationScale;
+    private bool isScaling = false;
+    private Vector3 smallScale = new Vector3(0, 0, 0);
 
     void Awake()
     {
         myClips = Resources.LoadAll<AudioClip>("Audio");
-
+        transform.localPosition = transform.position;
         thisSound = GetComponent<AudioSource>();
         if (isPlaying == false)
         {
@@ -24,8 +28,7 @@ public class SpeechBubble : MonoBehaviour {
 
             RandomizeSfx(myClips);
         }
-        speed = 200 / thisSound.clip.length;
-
+        speed = 400 / thisSound.clip.length;
     }
     // Use this for initialization
     void Start () {
@@ -45,7 +48,11 @@ public class SpeechBubble : MonoBehaviour {
         {
             speechBubble.isKinematic = true;
             if(transform.localScale.x <= 2f && transform.localScale.y <= 2f && transform.localScale.z <= 2f)
-                transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
+            {
+                //transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
+                destinationScale = transform.localScale;
+            }
+
         }
         if (!thisSound.isPlaying)
         {
@@ -53,16 +60,24 @@ public class SpeechBubble : MonoBehaviour {
             isPlaying = false;
             speechBubble.isKinematic = false;
             transform.parent = null;
+            Destroy(gameObject, thisSound.clip.length);
+            //DestroySound(thisSound.clip.length);
+            //Invoke("DestroySound", 0.09f * thisSound.clip.length);
+            //transform.localScale *= 0.25f;
             //thisSound.Stop();
         }
     }
-    void DestroySound()
+    private void DestroySound() //Method to decrease size based on the amount of time
     {
+        //float scaleFactor = 0.99f + (0.5 / time);
+        transform.localScale *= .9f;
+        
+        if (transform.localScale == smallScale)
+        {
+            Destroy(gameObject);
+            Debug.Log("SPEECH BUBBLE DESTROYED");
+        }
         //Destroy(gameObject);
-    }
-    public void BuildSound(GameObject temp)
-    {
-        temp.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
     }
     public void RandomizeSfx(params AudioClip[] myClips)
     {
@@ -87,7 +102,7 @@ public class SpeechBubble : MonoBehaviour {
             {
                 var hit = other.gameObject;
                 var health = hit.GetComponent<Health>();
-                int damage = Mathf.RoundToInt(5 * thisSound.clip.length);
+                int damage = Mathf.RoundToInt(damageFactor * thisSound.clip.length);
                 if (health != null)
                 {
                     health.TakeDamage(damage);

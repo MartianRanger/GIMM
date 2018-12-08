@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
         //SceneManager.LoadScene("Main");
         //failCanvas.gameObject.SetActive(true);
         gameOver = true;
-        StartCoroutine("waitAndLoad", 2.0f);
+        StartCoroutine("waitAndLoad", 5.0f);
         //Invoke("waitAndLoad", 1);
     }
     private void playerLose()
@@ -70,16 +70,17 @@ public class GameManager : MonoBehaviour
 	    failCam.enabled = true;
         //winCam.enabled = false;
         gameOver = true;
-        StartCoroutine("waitAndLoad", 2.0f);
+        StartCoroutine("waitAndLoad", 5.0f);
         //Invoke("waitAndLoad", 1);
 
     }
 
     IEnumerator waitAndLoad()
     {
+        yield return new WaitForSeconds(5f); //wait for load to happen
+
         SceneManager.LoadScene("VRMain"); //load scene
 
-        yield return new WaitForSeconds(.02f); //wait for load to happen
 
         //yield return new WaitForSeconds(.02f); //wait for load to happen
 

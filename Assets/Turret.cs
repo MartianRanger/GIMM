@@ -43,6 +43,7 @@ public class Turret : MonoBehaviour
                 }*/
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.position - transform.position), rotationSpeed * Time.deltaTime);
                 transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                Debug.Log("CHASING");
             }
         }
     }

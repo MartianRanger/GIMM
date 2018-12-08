@@ -62,9 +62,9 @@ public class CustomVRControls : MonoBehaviour {
         }
         if (OVRInput.GetDown(OVRInput.Button.Three))
         {
-            bomb = Instantiate(bombPrefab, bombSpawn.position, transform.rotation);
+            bomb = Instantiate(bombPrefab, bombSpawn.position, bombSpawn.rotation);
             bomb.GetComponent<Rigidbody>().useGravity = true;
-            bomb.GetComponent<Rigidbody>().AddForce(Vector3.forward * bombForce);
+            bomb.GetComponent<Rigidbody>().AddForce(bombSpawn.forward * bombForce);
             Debug.Log(bomb.GetComponent<Rigidbody>().velocity);
             speechBubble = true;
             Debug.Log("BOMB!");

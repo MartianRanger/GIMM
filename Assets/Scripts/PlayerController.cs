@@ -40,11 +40,12 @@ public class PlayerController : MonoBehaviour {
     {
         if(Input.GetMouseButtonDown(0))
         {
-            bomb = Instantiate(bombPrefab, bombSpawn.position, player.rotation);
+            /*bomb = Instantiate(bombPrefab, bombSpawn.position, bombSpawn.rotation);
             bomb.GetComponent<Rigidbody>().useGravity = true;
-            bomb.GetComponent<Rigidbody>().AddForce(Vector3.forward * bombForce);
+            bomb.GetComponent<Rigidbody>().AddForce(bombSpawn.forward * bombForce);
+            Debug.Log(Vector3.forward);
             Debug.Log(bomb.GetComponent<Rigidbody>().velocity);
-            speechBubble = true;
+            speechBubble = true;*/
         }
         if (Input.GetKeyDown(KeyCode.Space) && speechBubble == true)
         {
