@@ -46,11 +46,12 @@ public class SpeechBubble : MonoBehaviour {
     void Update () {
         if (thisSound.isPlaying)
         {
+            float speechBubbleScale = 1f * thisSound.clip.length;
             speechBubble.isKinematic = true;
-            if(transform.localScale.x <= 2f && transform.localScale.y <= 2f && transform.localScale.z <= 2f)
+            if(transform.localScale.x <= speechBubbleScale && transform.localScale.y <= speechBubbleScale && transform.localScale.z <= speechBubbleScale)
             {
-                //transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
-                destinationScale = transform.localScale;
+                transform.localScale += new Vector3(0.001f, 0.001f, 0.001f);
+                //destinationScale = transform.localScale;
             }
 
         }
